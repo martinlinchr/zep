@@ -1,0 +1,24 @@
+# Zep Configuration File
+server:
+  host: "0.0.0.0"
+  port: 8000
+  web_enabled: true
+
+# Database configuration
+store:
+  type: "postgres"
+  postgres:
+    dsn: "postgres://postgres:postgres@db:5432/postgres?sslmode=disable"
+
+# Memory configuration
+memory:
+  message_window: 12
+
+# Graphiti integration
+graphiti:
+  enabled: true
+  url: "http://graphiti:8003"
+
+# Logging
+log:
+  level: "info"
