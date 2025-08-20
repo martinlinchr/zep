@@ -7,17 +7,6 @@ server:
 # API Security - Using environment variable
 api_secret: "${ZEP_API_SECRET}"
 
-# Database configuration
-store:
-  type: "postgres"
-  postgres:
-    host: "db"
-    port: 5432
-    user: "postgres" 
-    password: "postgres"
-    dbname: "postgres"
-    sslmode: "disable"
-
 # Memory configuration
 memory:
   message_window: 12
