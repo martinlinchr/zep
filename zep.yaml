@@ -1,11 +1,17 @@
-# Zep Configuration File
+# Minimal Zep Configuration - hardcoded for testing
 server:
   host: "0.0.0.0"
   port: 8000
   web_enabled: true
 
-# API Security - Using environment variable
-api_secret: "${ZEP_API_SECRET}"
+# Hardcoded API secret for testing
+api_secret: "temporary-test-secret-123"
+
+# Database configuration
+store:
+  type: "postgres"
+  postgres:
+    dsn: "postgres://postgres:postgres@db:5432/postgres?sslmode=disable"
 
 # Memory configuration
 memory:
