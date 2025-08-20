@@ -4,16 +4,12 @@ services:
     image: zepai/zep:latest
     expose:
       - "8000"
+    volumes:
+      - ./zep.yaml:/app/zep.yaml
     environment:
-      # Remove YAML config and use direct environment variables
-      - STORE_TYPE=postgres
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-      - API_SECRET=temporary-hardcoded-secret-123
-      - ZEP_API_SECRET=temporary-hardcoded-secret-123
+      - ZEP_CONFIG_FILE=zep.yaml
+      # Minimal environment - let YAML handle most config
+      - ZEP_CONFIG_FILE=zep.yaml
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     networks:
       - zep-network
