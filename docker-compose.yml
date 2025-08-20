@@ -9,6 +9,9 @@ services:
     environment:
       - ZEP_CONFIG_FILE=zep.yaml
       - ZEP_API_SECRET=${ZEP_API_SECRET}
+      # Try explicit database env vars
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres?sslmode=disable
+      - POSTGRES_URL=postgres://postgres:postgres@db:5432/postgres?sslmode=disable
     networks:
       - zep-network
       - dokploy-network
@@ -17,6 +20,8 @@ services:
         condition: service_healthy
       db:
         condition: service_healthy
+    # Add a restart policy
+    restart: unless-stopped
     labels:
       # Traefik labels for Dokploy
       - "traefik.enable=true"
