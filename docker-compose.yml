@@ -1,7 +1,7 @@
 name: zep-ce
 services:
   zep:
-    image: zepai/zep:latest
+    image: ghcr.io/getzep/zep:v0.25.0
     expose:
       - "8000"
     volumes:
