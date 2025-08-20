@@ -8,6 +8,7 @@ services:
       - ./zep.yaml:/app/zep.yaml
     environment:
       - ZEP_CONFIG_FILE=zep.yaml
+      - ZEP_API_SECRET=${ZEP_API_SECRET}
     networks:
       - zep-network
       - dokploy-network
