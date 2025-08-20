@@ -7,6 +7,12 @@ server:
 # API Security - Using environment variable
 api_secret: "${ZEP_API_SECRET}"
 
+# Database configuration - Direct DSN in YAML
+store:
+  type: "postgres"
+  postgres:
+    dsn: "postgres://postgres:postgres@db:5432/postgres?sslmode=disable"
+
 # Memory configuration
 memory:
   message_window: 12
