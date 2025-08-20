@@ -2,9 +2,6 @@ name: zep-ce
 services:
   zep:
     image: zepai/zep:latest
-    # Remove external port mapping since Traefik will handle routing
-    # ports:
-    #   - "8000:8000"
     expose:
       - "8000"
     volumes:
@@ -13,6 +10,7 @@ services:
       - ZEP_CONFIG_FILE=zep.yaml
     networks:
       - zep-network
+      - dokploy-network
     depends_on:
       graphiti:
         condition: service_healthy
@@ -21,10 +19,7 @@ services:
     labels:
       # Traefik labels for Dokploy
       - "traefik.enable=true"
-      # Main Zep API (required)
       - "traefik.http.routers.zep.rule=Host(`zep1.martin-linde.com`)"
-      # Neo4j Browser (optional - only if you want database access)
-      - "traefik.http.routers.neo4j.rule=Host(`neo4j-zep1.martin-linde.com`)"
       - "traefik.http.routers.zep.entrypoints=websecure"
       - "traefik.http.routers.zep.tls.certresolver=letsencrypt"
       - "traefik.http.services.zep.loadbalancer.server.port=8000"
@@ -40,7 +35,6 @@ services:
       - POSTGRES_PASSWORD=postgres
     networks:
       - zep-network
-      - dokploy-network  # Add Dokploy network for Traefik access
     healthcheck:
       test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres"]
       interval: 5s
@@ -48,15 +42,9 @@ services:
       retries: 5
     volumes:
       - zep-db:/var/lib/postgresql/data
-    # Remove external port mapping for security
-    # ports:
-    #   - "5432:5432"
 
   graphiti:
     image: zepai/graphiti:0.3
-    # Remove external port mapping
-    # ports:
-    #   - "8003:8003"
     expose:
       - "8003"
     env_file:
@@ -89,16 +77,13 @@ services:
     image: neo4j:5.22.0
     networks:
       - zep-network
+      - dokploy-network
     healthcheck:
       test: wget http://localhost:7474 || exit 1
       interval: 1s
       timeout: 10s
       retries: 20
       start_period: 3s
-    # Remove external port mappings for security
-    # ports:
-    #   - "7474:7474"
-    #   - "7687:7687"
     expose:
       - "7474"
       - "7687"
@@ -109,7 +94,7 @@ services:
     labels:
       # Optional: expose Neo4j browser if needed
       - "traefik.enable=true"
-      - "traefik.http.routers.neo4j.rule=Host(`zep1.martin-linde.com`)"
+      - "traefik.http.routers.neo4j.rule=Host(`neo4j-zep1.martin-linde.com`)"
       - "traefik.http.routers.neo4j.entrypoints=websecure"
       - "traefik.http.routers.neo4j.tls.certresolver=letsencrypt"
       - "traefik.http.services.neo4j.loadbalancer.server.port=7474"
