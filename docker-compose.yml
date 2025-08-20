@@ -12,7 +12,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
-      - API_SECRET=${ZEP_API_SECRET}
+      - API_SECRET=temporary-hardcoded-secret-123
+      - ZEP_API_SECRET=temporary-hardcoded-secret-123
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     networks:
       - zep-network
