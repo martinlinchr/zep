@@ -4,6 +4,9 @@ server:
   port: 8000
   web_enabled: true
 
+# API Security - Using environment variable
+api_secret: "${ZEP_API_SECRET}"
+
 # Database configuration
 store:
   type: "postgres"
