@@ -9,9 +9,8 @@ services:
     environment:
       - ZEP_CONFIG_FILE=zep.yaml
       - ZEP_API_SECRET=${ZEP_API_SECRET}
-      # Try explicit database env vars
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres?sslmode=disable
-      - POSTGRES_URL=postgres://postgres:postgres@db:5432/postgres?sslmode=disable
+      - ZEP_STORE_TYPE=postgres
+      - ZEP_STORE_POSTGRES_DSN=postgres://postgres:postgres@db:5432/postgres?sslmode=disable
     networks:
       - zep-network
       - dokploy-network
