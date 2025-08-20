@@ -21,7 +21,10 @@ services:
     labels:
       # Traefik labels for Dokploy
       - "traefik.enable=true"
+      # Main Zep API (required)
       - "traefik.http.routers.zep.rule=Host(`zep1.martin-linde.com`)"
+      # Neo4j Browser (optional - only if you want database access)
+      - "traefik.http.routers.neo4j.rule=Host(`neo4j-zep1.martin-linde.com`)"
       - "traefik.http.routers.zep.entrypoints=websecure"
       - "traefik.http.routers.zep.tls.certresolver=letsencrypt"
       - "traefik.http.services.zep.loadbalancer.server.port=8000"
